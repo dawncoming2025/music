@@ -308,6 +308,48 @@
             grid-column: span 3;
         }
 
+        /* 版权声明样式 */
+        .copyright-notice {
+            position: relative;
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid #ff5252;
+            border-radius: 12px;
+            padding: 20px 40px 20px 20px;
+            margin: 20px 0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .copyright-notice p {
+            font-weight: bold;
+            color: #ff5252;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #a0aec0;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .close-btn:hover {
+            background: #ff5252;
+            transform: scale(1.1);
+        }
+
         /* 歌词显示区域 */
         .lyrics-container {
             height: 300px;
@@ -473,6 +515,10 @@
             .lyrics-container {
                 height: 240px;
             }
+            
+            .copyright-notice {
+                padding: 15px 35px 15px 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -493,6 +539,11 @@
             
             nav .nav-links {
                 gap: 0.8rem;
+            }
+            
+            .copyright-notice p {
+                font-size: 1rem;
+                padding-right: 10px;
             }
         }
         
@@ -694,7 +745,14 @@
     <!-- 主要内容 -->
     <main>
         <h1>音乐播放器</h1>
-        <p>聆听精选音乐，感受灵魂共鸣</p>
+        
+        <!-- 版权声明 -->
+        <div class="copyright-notice" id="copyrightNotice">
+            <button class="close-btn" id="closeNotice">
+                <i class="fas fa-times"></i>
+            </button>
+            <p>本网站所有歌曲仅供听赏，请勿二次传播，若因二次传播造成侵权，本站概不负责。</p>
+        </div>
         
         <div class="main-container">
             <!-- 左侧歌曲列表 -->
@@ -774,8 +832,8 @@
             const playlist = document.getElementById('playlist');
             const songTitle = document.getElementById('songTitle');
             const downloadBtn = document.querySelector('.download-btn');
-            const songInfo = document.getElementById('songInfo');
-            const hotComments = document.getElementById('hotComments');
+            const copyrightNotice = document.getElementById('copyrightNotice');
+            const closeNoticeBtn = document.getElementById('closeNotice');
             
             // 歌曲数据
             const songs = [
@@ -893,6 +951,15 @@
                     playlist.appendChild(li);
                 });
             }
+            
+            // 关闭版权声明
+            closeNoticeBtn.addEventListener('click', function() {
+                copyrightNotice.style.opacity = '0';
+                copyrightNotice.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    copyrightNotice.style.display = 'none';
+                }, 300);
+            });
             
             // 加载歌曲
             function loadSong(song) {
